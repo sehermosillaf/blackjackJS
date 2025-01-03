@@ -6,9 +6,18 @@ let playerScore = 0;
 let computerScore = 0;
 
 const createDeck = () => {
+  for (let i = 2; i <= 10; i++) {
     for (let suit of suits) {
     }
   deck = _.shuffle(deck)
+const hitCard = () => {
+    let randomIndex  = _.random(0,deck.length)
+    let randomCard = deck[randomIndex]
+    deck.splice(randomIndex,1)
     console.log(deck);
+    if (deck.length <= 0) {
+        window.alert("no quedan cartas en la baraja")
+    }
 }
 
+createDeck()
