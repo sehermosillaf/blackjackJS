@@ -7,10 +7,11 @@ let computerScore = 0;
 const createDeck = () => {
     //cards
     for (let i = 2; i<=10; i++) {
-        for (let index = 0; index < suits.length; index++) {
-            deck.push(i + suits[index].charAt(0))
+        for(let suit of suits) {
+            deck.push(i + suit.charAt(0))
         }
     }
+    
 }
 
 createDeck();
