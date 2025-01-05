@@ -24,6 +24,12 @@ const createDeck = () => {
 
 
 const cleanDeck = () =>  deck = [];
+const cleanScores = () => {
+  playerScore = 0;
+  computerScore =  0;
+  const playerScoreElement = document.getElementById("player-score");
+  playerScoreElement.textContent="0";
+}
 
 const resetTable = () => {
   while(playerCardsElement.firstChild) {
@@ -31,6 +37,7 @@ const resetTable = () => {
  }
  cleanDeck();
  createDeck();
+ cleanScores();
  console.log(deck);
 }
 
@@ -45,13 +52,15 @@ const getCard = () => {
   card.src = `assets/cartas/${selectedCard}.png`;
   card.className = "carta"
   document.getElementById("jugador-cartas").appendChild(card);
+  updateScores(selectedCard)
 
-  //todo: seperar logica
-  playerScore += cardValue(selectedCard)
-  console.log(playerScore);
-  playerScoreElement = document.getElementById("player-score");
-  scoreText = document.createTextNode(playerScore)
-  playerScoreElement.appendChild(scoreText)
+}
+
+const updateScores = (card) => {
+  const playerScoreElement = document.getElementById("player-score");
+  const currentScore = parseInt(playerScoreElement.textContent) || 0
+  const newScore = currentScore + cardValue(card);
+  playerScoreElement.textContent = newScore;
 }
 
 // Todo: revisar valor de los Aces
@@ -59,7 +68,6 @@ const cardValue = (selectedCard) => {
   const card = selectedCard.charAt(0);
   return value  =  isNaN(card) ? 10 : card * 1;
 }
-
 cardValue('2D');
 console.log(value);
 
