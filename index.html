@@ -16,17 +16,16 @@
     
     <div class="row mt-2">
         <div class="col text-center">
-            <button class="btn btn-danger">Nuevo Juego</button>
-            <button class="btn btn-primary" onclick="hitCard()">Pedir Carta </button>
+            <button class="btn btn-danger" onclick="resetTable()">Nuevo Juego</button>
+            <button class="btn btn-primary" onclick="getCard()">Pedir Carta </button>
             <button class="btn btn-primary">Detener</button>
         </div>
     </div>
 
     <div class="container row mx-auto mt-5">
         <div class="col">
-            <h1>Jugador 1 - <small>0</small></h1>
             <div id="jugador-cartas">
-                <img class="carta" src="assets/cartas/10H.png" alt="carta" >
+                
             </div>
         </div>
     </div>
@@ -34,7 +33,7 @@
         <div class="col">
             <h1>Computadora -  <small>0</small></h1>
             <div id="computadora-cartas">
-                <img class="carta" src="assets/cartas/10C.png" alt="carta" >
+               
             </div>
         </div>
     </div>
