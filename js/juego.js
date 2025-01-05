@@ -7,6 +7,8 @@ const playerCardsElement = document.getElementById("jugador-cartas");
 const computerCardsElement = document.getElementById("computadora-cartas");
 let playerScore = 0;
 let computerScore = 0;
+let isPlayer = true;
+let isStand = false;
 
 const createDeck = () => {
   for (let i = 2; i <= 10; i++) {
@@ -22,18 +24,23 @@ const createDeck = () => {
   deck = _.shuffle(deck);
 };
 
-const cleanDeck = () => (deck = []);
+const cleanDeck = () => deck = [];
 
 const cleanScores = () => {
   playerScore = 0;
   computerScore = 0;
   const playerScoreElement = document.getElementById("player-score");
+  const pcScoreElement = document.getElementById("pc-score");
   playerScoreElement.textContent = "0";
+  pcScoreElement.textContent = "0";
 };
 
 const resetTable = () => {
   while (playerCardsElement.firstChild) {
     playerCardsElement.removeChild(playerCardsElement.firstChild);
+  }
+  while(computerCardsElement.firstChild) {
+    computerCardsElement.removeChild(computerCardsElement.firstChild)
   }
   cleanDeck();
   createDeck();
@@ -45,56 +52,72 @@ const getCard = () => {
   if (deck.length <= 0) {
     window.alert("no quedan cartas en la baraja");
   }
-  const selectedCard = deck[0];
-  deck.splice(selectedCard, 1);
+  if (isPlayer && !isStand) {
+    const selectedCard = deck[0];
+    deck.splice(selectedCard, 1);
 
-  const card = document.createElement("img");
-  card.src = `assets/cartas/${selectedCard}.png`;
-  card.className = "carta";
-  document.getElementById("jugador-cartas").appendChild(card);
-  updateScores(selectedCard);
+    const card = document.createElement("img");
+    card.src = `assets/cartas/${selectedCard}.png`;
+    card.className = "carta";
+    document.getElementById("jugador-cartas").appendChild(card);
+    updateScores(selectedCard);
+  }
 };
 
 const updateScores = (card) => {
   const playerScoreElement = document.getElementById("player-score");
-  const currentScore = parseInt(playerScoreElement.textContent) || 0;
-  const newScore = currentScore + cardValue(card);
-  playerScoreElement.textContent = newScore;
-  checkBlackJack(newScore)
-  console.log(newScore);
+  const pcScoreElement = document.getElementById("pc-score");
+  if (isPlayer && !isStand) {
+    const currentScore = parseInt(playerScoreElement.textContent) || 0;
+    const newScore = currentScore + getCardValue(card);
+    playerScoreElement.textContent = newScore;
+    checkBlackJack(newScore);
+    console.log('estoy aca');
+    return newScore
+  }
+  if (!isPlayer && isStand) {
+    const currentScore = parseInt(pcScoreElement.textContent) || 0;
+    let newScore = currentScore + getCardValue(card);
+    pcScoreElement.textContent = newScore;
+    checkBlackJack(newScore)
+    return newScore
+  }
 };
 
 const checkBlackJack = (value) => {
-  if (value == 21) {
-    window.alert('ganaste ' +  value);
-  }
-
   if (value > 21) {
-    window.alert('te pasaste ' + value);
-    resetTable()
+    isStand = false;
+    console.log('perdiste');
+  }
+  if (value == 21) {
+    console.log('ganaste');
   }
 
-}
+};
 
-// Todo: revisar valor de los Aces y 10s
-// corrige valor 10, tomaba solo el 1 del string con charat 
-// todo: ver como mejorar esta funcion
-const cardValue = (selectedCard) => {
-  if(selectedCard.length == 3) {
+const getCardValue = (selectedCard) => {
+  if (selectedCard.length == 3) {
     value = 10;
     return value;
   }
   let card = selectedCard.charAt(0);
-
   return (value = isNaN(card) ? 10 : card * 1);
-  console.log(value);
 };
 
-
 const stand = () => {
-  
-}
+  isStand = true;
+  isPlayer = false;
 
+  while(isStand) {
+    const selectedCard = deck[0];
+    deck.splice(selectedCard, 1);
+    const card = document.createElement("img");
+    card.src = `assets/cartas/${selectedCard}.png`;
+    card.className = "carta";
+    document.getElementById("computadora-cartas").appendChild(card);
+    score = updateScores(selectedCard);
+    checkBlackJack(score)
+  }
+};
 
-cardValue('10D')
 createDeck();

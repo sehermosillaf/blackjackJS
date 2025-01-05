@@ -18,7 +18,7 @@
         <div class="col text-center">
             <button class="btn btn-danger" onclick="resetTable()">Nuevo Juego</button>
             <button class="btn btn-primary" onclick="getCard()">Pedir Carta </button>
-            <button class="btn btn-primary">Plantarse</button>
+            <button class="btn btn-primary" onclick="stand()">Plantarse</button>
         </div>
     </div>
 
@@ -32,7 +32,7 @@
     </div>
     <div class="container row mx-auto mt-5">
         <div class="col">
-            <h1>Computadora -  <small>0</small></h1>
+            <h1>Computadora -  <small id="pc-score"></small></h1>
             <div id="computadora-cartas">
                
             </div>
