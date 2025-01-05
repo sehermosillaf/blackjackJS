@@ -3,6 +3,8 @@
 let deck = [];
 const suits = ["Clubs", "Diamonds", "Hearts", "Spades"];
 const faceCards = ["Jacks", "Queens", "Kings", "Aces"];
+const playerCardsElement = document.getElementById("jugador-cartas");
+const computerCardsElement = document.getElementById("computadora-cartas");
 let playerScore = 0;
 let computerScore = 0;
 
@@ -18,26 +20,47 @@ const createDeck = () => {
     }
   }
   deck = _.shuffle(deck)
-  console.log(deck);
 };
-// revisar reglas de juego
-// TODO: no deberia ser random la carta ya que la baraja ya esta revuelta.
-const hitCard = () => {
-  //obtenemos la primera carta de la baraja y la eliminamos
-  let selectedCard = deck[0];
-  deck.splice(selectedCard,1)
 
-  // crear funcion para separar
+
+const cleanDeck = () =>  deck = [];
+
+const resetTable = () => {
+  while(playerCardsElement.firstChild) {
+  playerCardsElement.removeChild(playerCardsElement.firstChild)
+ }
+ cleanDeck();
+ createDeck();
+ console.log(deck);
+}
+
+const getCard = () => {
+  if (deck.length <= 0) {
+    window.alert("no quedan cartas en la baraja")
+}
+  const selectedCard = deck[0];
+  deck.splice(selectedCard,1);
+
   const card = document.createElement("img");
   card.src = `assets/cartas/${selectedCard}.png`;
   card.className = "carta"
   document.getElementById("jugador-cartas").appendChild(card);
-  
-    if (deck.length <= 0) {
-        window.alert("no quedan cartas en la baraja")
-    }
+
+  //todo: seperar logica
+  playerScore += cardValue(selectedCard)
+  console.log(playerScore);
+  playerScoreElement = document.getElementById("player-score");
+  scoreText = document.createTextNode(playerScore)
+  playerScoreElement.appendChild(scoreText)
 }
 
+// Todo: revisar valor de los Aces
+const cardValue = (selectedCard) => {
+  const card = selectedCard.charAt(0);
+  return value  =  isNaN(card) ? 10 : card * 1;
+}
 
+cardValue('2D');
+console.log(value);
 
 createDeck()
