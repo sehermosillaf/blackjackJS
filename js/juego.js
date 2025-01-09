@@ -49,7 +49,7 @@ const resetTable = () => {
 };
 
 const getCard = () => {
-  if (deck.length <= 0) {
+  if (deck.length === 0) {
     window.alert("no quedan cartas en la baraja");
   }
   if (isPlayer && !isStand) {
@@ -96,18 +96,14 @@ const checkBlackJack = (value) => {
 };
 
 const getCardValue = (selectedCard) => {
-  if (selectedCard.length == 3) {
-    value = 10;
-    return value;
-  }
-  let card = selectedCard.charAt(0);
-  return (value = isNaN(card) ? 10 : card * 1);
+  value = selectedCard.substring(0, selectedCard.length - 1);
+  return (value = isNaN(value) ? 10 : value * 1);
 };
 
 const stand = () => {
   isStand = true;
   isPlayer = false;
-  //revisar
+
   while(isStand) {
     const selectedCard = deck[0];
     deck.splice(selectedCard, 1);
@@ -122,3 +118,5 @@ const stand = () => {
 };
 
 createDeck();
+
+
