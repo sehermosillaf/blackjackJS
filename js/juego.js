@@ -107,7 +107,7 @@ const getCardValue = (selectedCard) => {
 const stand = () => {
   isStand = true;
   isPlayer = false;
-
+  //revisar
   while(isStand) {
     const selectedCard = deck[0];
     deck.splice(selectedCard, 1);
@@ -117,6 +117,7 @@ const stand = () => {
     document.getElementById("computadora-cartas").appendChild(card);
     score = updateScores(selectedCard);
     checkBlackJack(score)
+    break;
   }
 };
 
